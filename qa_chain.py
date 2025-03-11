@@ -4,6 +4,8 @@ from langchain.llms import Ollama
 from langchain.vectorstores import FAISS
 from langchain.embeddings import OllamaEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_community.embeddings import HuggingFaceEmbeddings
+
 
 def setup_qa_chain(report_text):
     """Creates a medical report Q&A system handling multi-page reports."""
@@ -15,7 +17,7 @@ def setup_qa_chain(report_text):
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
     docs = text_splitter.create_documents([report_text])
 
-    embeddings = OllamaEmbeddings(model="mistral")
+    embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
     vectorstore = FAISS.from_documents(docs, embeddings)
     retriever = vectorstore.as_retriever()
 
