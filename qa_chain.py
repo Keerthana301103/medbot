@@ -1,30 +1,26 @@
-from langchain.chains import ConversationalRetrievalChain
-from langchain.memory import ConversationBufferMemory
-from langchain.llms import Ollama
-from langchain.vectorstores import FAISS
-from langchain.embeddings import OllamaEmbeddings
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_community.embeddings import HuggingFaceEmbeddings
+from ollama_model import chat_with_ollama
+from doc_process import extract_text_from_pdf
+from mri_classification import predict_mri
+from explainability import generate_gradcam_explanation
 
+def process_user_query(query, uploaded_file, file_type):
+    """Processes user queries based on uploaded file type."""
+    
+    if file_type == "pdf":
+        text_content = extract_text_from_pdf(uploaded_file)
+        response = chat_with_ollama(f"Summarize this medical report and answer: {query}\n{text_content}")
+        return response, None
 
-def setup_qa_chain(report_text):
-    """Creates a medical report Q&A system handling multi-page reports."""
-    llm = Ollama(model="mistral")
+    elif file_type == "mri":
+        # Ensure MRI model allows gradient computation for Grad-CAM
+        prediction, output = predict_mri(uploaded_file)  
 
-    memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
+        # Generate Grad-CAM explanation
+        explanation_fig = generate_gradcam_explanation(uploaded_file)  
 
-    # Improved text splitting for multi-page reports
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
-    docs = text_splitter.create_documents([report_text])
+        # Construct response
+        response = chat_with_ollama(f"The MRI prediction is '{prediction}'. User asks: {query}")
 
-    embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
-    vectorstore = FAISS.from_documents(docs, embeddings)
-    retriever = vectorstore.as_retriever()
+        return response, explanation_fig  
 
-    qa_chain = ConversationalRetrievalChain.from_llm(
-        llm=llm,
-        retriever=retriever,  # ✅ Pass retriever correctly
-        memory=memory
-    )
-
-    return qa_chain
+    return "Invalid file type", None  

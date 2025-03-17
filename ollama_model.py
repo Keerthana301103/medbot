@@ -1,7 +1,6 @@
-from langchain.llms import Ollama
-from config import OLLAMA_MODEL
+import ollama
 
-def get_ollama_response(prompt):
-    llm = Ollama(model=OLLAMA_MODEL)
-    response = llm(prompt)
-    return response
+def chat_with_ollama(prompt):
+    """Generates a response using Ollama's LLM."""
+    response = ollama.chat(model="mistral", messages=[{"role": "user", "content": prompt}])
+    return response["message"]["content"]
