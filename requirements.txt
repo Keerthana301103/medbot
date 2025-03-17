@@ -1,4 +1,4 @@
-streamlit
+
 PyPDF2
 langchain
 langchain_community
@@ -7,3 +7,17 @@ sentence-transformers
 matplotlib
 ollama
 pdfplumber
+transforms
+torch
+torchvision
+efficientnet_pytorch
+torchcam
+torchtext
+Pillow
+matplotlib
+numpy
+opencv-python
+streamlit
+transformers
+pdfplumber
+pathlib
