@@ -4,7 +4,6 @@ langchain
 langchain_community
 faiss-cpu
 sentence-transformers
-matplotlib
 ollama
 pdfplumber
 transforms
@@ -21,3 +20,4 @@ streamlit
 transformers
 pdfplumber
 pathlib
+openCV
