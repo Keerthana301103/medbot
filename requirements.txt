@@ -5,3 +5,4 @@ langchain_community
 faiss-cpu
 sentence-transformers
 matplotlib
+ollama
