@@ -20,4 +20,4 @@ streamlit
 transformers
 pdfplumber
 pathlib
-openCV
+opencv-python-headless
