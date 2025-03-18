@@ -38,4 +38,4 @@ def predict_mri(image_path):
     _, predicted_class = torch.max(output, 1)
     prediction = class_names[predicted_class.item()]
 
-    return prediction, output  # ✅ Return output tensor for Grad-CAM++
+    return prediction, output 

@@ -4,14 +4,12 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 from qa_chain import process_user_query
 
-# ✅ Set page config
 st.set_page_config(
     page_title="MedAI - Medical Chatbot",
     layout="wide",
     initial_sidebar_state="expanded",
 )
 
-# ✅ Custom CSS for Maroon & Red Theme
 st.markdown("""
     <style>
         body {
@@ -61,21 +59,16 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# ✅ Sidebar Navigation
+
 st.sidebar.title("Navigation")
 page = st.sidebar.radio("", ["Home", "Upload & Analyze"])
 
-# ✅ Ensure the uploads directory exists
 UPLOAD_DIR = Path("uploads")
 UPLOAD_DIR.mkdir(exist_ok=True)
 
-# ✅ Home Page
 if page == "Home":
     st.markdown("<h1 class='maroon-text'>MedAI - AI-Powered Medical Assistant</h1>", unsafe_allow_html=True)
     st.markdown("<p class='red-text'>MedAI helps analyze medical reports and brain MRI scans using AI.</p>", unsafe_allow_html=True)
-    
-    # 🔹 **Reduced banner size**
-    st.image(r"C:\Users\s.anumandla\Desktop\medBot\medbanner.png", use_container_width=False, width=500)
 
     st.markdown("""
         <p class="maroon-text">Features:</p>
