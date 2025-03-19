@@ -20,7 +20,7 @@ transform = transforms.Compose([
 # Load model
 model = EfficientNet.from_pretrained("efficientnet-b0")
 model._fc = torch.nn.Linear(model._fc.in_features, 4)  # 4-class classification
-model.load_state_dict(torch.load(r"C:\Users\s.anumandla\Desktop\medBot\model.pth", map_location=DEVICE))
+model.load_state_dict(torch.load(r"model.pth"))
 model.to(DEVICE)
 model.eval()
 
