@@ -3,6 +3,17 @@ import os
 from pathlib import Path
 import matplotlib.pyplot as plt
 from qa_chain import process_user_query
+OLLAMA_API_URL = "http://localhost:11434"
+
+import requests
+
+def query_ollama(prompt):
+    response = requests.post(
+        f"{OLLAMA_API_URL}/api/generate", 
+        json={"model": "mistral", "prompt": prompt}
+    )
+    return response.json()
+
 
 st.set_page_config(
     page_title="MedAI - Medical Chatbot",
